@@ -1,12 +1,11 @@
 # Importing necessary libraries and modules
-import os
 import streamlit as st
 import io
 from PIL import Image
-from diffusion import query  # Adjust based on your actual import path
-from voice import speech_to_text  # Ensure this is correctly implemented
+from diffusion import *
+from voice import speech_to_text
 from audio_recorder_streamlit import audio_recorder
-from streamlit_float import *  # Make sure you have this package
+from streamlit_float import *
 
 # Initialize session state for messages if it doesn't exist
 if "messages" not in st.session_state:
@@ -52,28 +51,14 @@ if ingested_query:
         "inputs": ingested_query,
     })
 
-    # Check if image_bytes is valid
-    if not image_bytes:
-        st.error("No image was generated. Please check your input.")
-        st.stop()
-
-    # Debug: Check the length and first few bytes of image_bytes
-    st.write(f"Image bytes length: {len(image_bytes)}")
-    st.write(image_bytes[:20])  # Print the first 20 bytes for inspection
-
     # Access the image with PIL.Image
-    try:
-        image = Image.open(io.BytesIO(image_bytes))
-    except Exception as e:
-        st.error(f"Failed to open image: {e}")
-        st.stop()
+    image = Image.open(io.BytesIO(image_bytes))
 
     # Saving the generated image to "Data" directory
-    os.makedirs("Data", exist_ok=True)  # Ensure the Data directory exists
     image.save("Data/generated_image.jpeg", format='jpeg')
 
     # Displaying the image and providing a download button
-    st.image(image, caption='Generated Image')
+    st.image(image)
     st.download_button(label="Download", data=image_bytes, file_name="generated_image_download.jpg")
 
 # Display chat messages
