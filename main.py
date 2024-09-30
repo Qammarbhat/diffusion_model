@@ -58,8 +58,8 @@ if ingested_query:
         st.stop()
 
     # Debug: Check the length and first few bytes of image_bytes
-    st.write(f"Image bytes length: {len(image_bytes)}")
-    st.write(image_bytes[:20])  # Print the first 20 bytes for inspection
+    # st.write(f"Image bytes length: {len(image_bytes)}")
+    # st.write(image_bytes[:20])  # Print the first 20 bytes for inspection
 
     # Access the image with PIL.Image
     try:
